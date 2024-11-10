@@ -20,6 +20,7 @@ def set_learning_rate(optimizer, lr):
         param_group['lr'] = lr
 
 
+#Added ResNet layers
 class Net(nn.Module):
     """policy-value network module with ResNet blocks"""
     def __init__(self, board_width, board_height):
