@@ -4,8 +4,10 @@ import random
 import numpy as np
 from game import Board, Game
 from mcts_alphaZero import MCTSPlayer
-from policy_value_net_numpy import PolicyValueNetNumpy
+from policy_value_net_numpy import PolicyValueNetNumpy as TheanoPolicyValueNet
+from policy_value_net_pytorch_ResNet import PolicyValueNet as PytorchPolicyValueNet
 import pickle
+import torch
 
 class HeuristicPlayer:
     """A heuristic-based player, structured similarly to MCTSPlayer."""
@@ -40,12 +42,14 @@ class HeuristicPlayer:
         # Evaluate each move based on heuristics
         move_scores = {}
         for move in sensible_moves:
+            # move_scores[move] = self.evaluate_move(board, move)
             # Check for critical blocking rules first
             if self.blocks_opponent_critical(board, move):
-                return move  # Directly return the move if it satisfies critical blocking
+                move_scores[move] = float('inf')
             
             # Otherwise, calculate heuristic score
-            move_scores[move] = self.evaluate_move(board, move)
+            else:
+                move_scores[move] = self.evaluate_move(board, move)
 
         # Select the move with the highest heuristic score
         best_move = max(move_scores, key=move_scores.get)
@@ -70,52 +74,89 @@ class HeuristicPlayer:
 
     def evaluate_move(self, board, move):
         """Evaluate the heuristic score of a move."""
-        score = 0
-        # Add the move to simulate its effect
-        board.do_move(move)
-        
-        # Own sequence evaluation
-        score += self.evaluate_sequence(board, move, self.player)
+        # Save the current state of the board
+        original_states = board.states.copy()
+        original_availables = board.availables[:]
+        original_current_player = board.current_player
 
-        # Undo move after evaluation
-        board.states.pop(move)
-        board.availables.append(move)
+        score = 0
+        try:
+            # Simulate the move
+            board.do_move(move)
+
+            # Evaluate the sequence after the move
+            score += self.evaluate_sequence(board, move, self.player)
+        finally:
+            # Restore the original state of the board
+            board.states = original_states
+            board.availables = original_availables
+            board.current_player = original_current_player
+
         return score
+
 
     def evaluate_sequence(self, board, move, player):
         """Evaluate the score based on created sequences."""
         score = 0
+        target = board.n_in_row
         # Check all directions (horizontal, vertical, two diagonals)
         directions = [(1, 0), (0, 1), (1, 1), (1, -1)]
         for direction in directions:
-            line_length = self.count_in_a_row(board, move, player, direction)
-            if line_length == 2:
-                score += 2
-            elif line_length == 3:
-                score += 3
-            elif line_length == 4:
-                score += 4
-            elif line_length >= 5:
+            line_length,_ = self.count_in_a_row(board, move, player, direction)
+            if line_length >= target:
                 score += 100  # Winning move
+            else:
+                for i in range(2, target):
+                    if line_length == i:
+                        score += i
+                        break  # No need to check further in this direction
         return score
 
     def count_in_a_row(self, board, move, player, direction):
-        """Count consecutive stones in a row in the given direction."""
+        """Count consecutive stones of the given player in both directions from 'move'."""
         dx, dy = direction
-        count = 1  # Start with the current move
-        for d in [1, -1]:  # Check both forward and backward
-            x, y = move % board.width, move // board.width
-            while True:
-                x, y = x + dx * d, y + dy * d
-                if 0 <= x < board.width and 0 <= y < board.height:
-                    pos = y * board.width + x
-                    if board.states.get(pos) == player:
-                        count += 1
-                    else:
-                        break
-                else:
-                    break
-        return count
+        x, y = move // board.width, move % board.width  # Corrected line for row and column extraction
+        
+        count = 1  # Start with the current position as part of the sequence
+        open_ends = 0
+
+        if x == 0 or y == 0 or x == board.width - 1 or y == board.height - 1:
+            open_ends += 1 
+
+        # Check forward direction
+        forward_count = 0
+        fx, fy = x + dx, y + dy
+        while 0 <= fx < board.width and 0 <= fy < board.height:
+            forward_pos = fx * board.width + fy
+            if board.states.get(forward_pos) == player:
+                forward_count += 1
+                fx += dx
+                fy += dy
+            elif board.states.get(forward_pos) is None:
+                open_ends += 1
+                break
+            else:
+                break  # Stop if we reach an empty spot or opponent's stone
+        
+        # Check backward direction
+        backward_count = 0
+        bx, by = x - dx, y - dy
+        while 0 <= bx < board.width and 0 <= by < board.height:
+            backward_pos = bx * board.width + by
+            if board.states.get(backward_pos) == player:
+                backward_count += 1
+                bx -= dx
+                by -= dy
+            elif board.states.get(backward_pos) is None:
+                open_ends += 1
+                break
+            else:
+                break  # Stop if we reach an empty spot or opponent's stone
+
+        # Total consecutive count including the 'move' position
+        count = 1 + forward_count + backward_count
+        return count, open_ends
+
 
     def blocks_opponent_critical(self, board, move):
         """Check if the move blocks an opponent's critical sequence."""
@@ -128,11 +169,15 @@ class HeuristicPlayer:
 
     def blocks_three_open(self, board, move, direction):
         """Check if the move blocks an opponent's 3-in-a-row with both ends open."""
-        return self.count_in_a_row(board, move, self.opponent, direction) >= 3
+        cnt, openEnd = self.count_in_a_row(board, move, self.opponent, direction)
+        return cnt >= board.n_in_row - 1 and openEnd == 2
+
 
     def blocks_four_one_open(self, board, move, direction):
         """Check if the move blocks an opponent's 4-in-a-row with one open end."""
-        return self.count_in_a_row(board, move, self.opponent, direction) >= 4
+        cnt, openEnd = self.count_in_a_row(board, move, self.opponent, direction)
+        return cnt >= board.n_in_row and openEnd == 1
+
 
     def __str__(self):
         return "HeuristicPlayer {}".format(self.player)
@@ -153,11 +198,21 @@ def main(model_name, mode):
     model_file = f"{model_name}.model"
     try:
         with open(model_file, 'rb') as f:
-            policy_param = pickle.load(f, encoding='latin1')
+            try:
+                # Attempt to load as a pickle file
+                policy_param = pickle.load(f, encoding='latin1')
+                print("Loaded model file as a pickle.")
+                best_policy = TheanoPolicyValueNet(width, height, policy_param)
+            except pickle.UnpicklingError:
+                # If pickle fails, try loading as a PyTorch model
+                f.seek(0)  # Reset file pointer to the beginning
+                policy_param = torch.load(f, map_location=torch.device('cpu'))  # Load PyTorch model
+                print("Loaded model file as a PyTorch model.")
+                best_policy = PytorchPolicyValueNet(width, height, policy_param)
     except FileNotFoundError:
         raise ValueError(f"Model file '{model_file}' not found.")
+
     
-    best_policy = PolicyValueNetNumpy(width, height, policy_param)
     mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct=5, n_playout=400)
 
     # Initialize the heuristic player
@@ -186,9 +241,44 @@ if __name__ == "__main__":
     # Example usage:
     # main("best_policy_8_8_5", "dem") for demonstration
     # main("best_policy_8_8_5", "rate") for rating
-    import sys
-    if len(sys.argv) != 3:
-        print("Usage: python heuristic_vs_model.py <model_name> <mode>")
-        print("Example: python heuristic_vs_model.py best_policy_8_8_5 dem")
-    else:
-        main(sys.argv[1], sys.argv[2])
+    # main("best_policy_8_8_5", "dem")
+    main("best_policy_8_8_5_ResNet", "dem")
+#     import sys
+#     if len(sys.argv) != 3:
+#         print("Usage: python heuristic_vs_model.py <model_name> <mode>")
+#         print("Example: python heuristic_vs_model.py best_policy_8_8_5 dem")
+#     else:
+#         main(sys.argv[1], sys.argv[2])
+# #    Set board parameters
+#     width, height = 6, 6
+#     n_in_row = 4  # Winning condition: 4 in a row
+#     board = Board(width=width, height=height, n_in_row=n_in_row)
+
+#     # Set up the board state
+#     board.states = {
+#         21: 1,  # X at (3, 3)
+#         13: 1,  # X at (2, 1)
+#         9: 1,   # X at (1, 3)
+#         20: 1,  # X at (3, 2)
+#         14: 2,  # O at (2, 2)
+#         15: 2,  # O at (2, 3)
+#         19: 2,  # O at (3, 1)
+#         16: 2,  # O at (2, 4)
+#     }
+#     board.availables = [0,1,2,3,4,5,6,7,8,10,11,12,17,18,22,23,24,25,26,27,28,29,30,31,32,33,34,35]  # Set available moves to include potential blocking positions
+#     board.current_player = 1  # X to play
+
+#     # Initialize HeuristicPlayer
+#     player = HeuristicPlayer()
+#     player.set_player_ind(1)  # Set as player 1 (X)
+
+#     # Check if blocks_opponent_critical correctly identifies the critical moves
+#     critical_positions = [0,1,2,3,4,5,6,7,8,10,11,12,17,18,22,23,24,25,26,27,28,29,30,31,32,33,34,35]
+#     for move in critical_positions:
+#         is_critical = player.blocks_opponent_critical(board, move)
+#         print(f"Move {move} at position ({move // width}, {move % width}) is critical: {is_critical}")
+
+#     # Test the action selection
+#     move = player.get_action(board)
+#     print(f"Player X selected move: {move} (expected one of {critical_positions})")
+#     assert move in critical_positions, "Player X failed to block a critical move."
