@@ -1,0 +1,761 @@
+Loaded model file as a PyTorch model.
+<class 'collections.OrderedDict'>
+Keys in policy_param (state_dict): odict_keys(['conv1.weight', 'conv1.bias', 'res_conv1.weight', 'res_conv1.bias', 'res_conv2.weight', 'res_conv2.bias', 'conv2.weight', 'conv2.bias', 'res_conv3.weight', 'res_conv3.bias', 'res_conv4.weight', 'res_conv4.bias', 'conv3.weight', 'conv3.bias', 'act_conv1.weight', 'act_conv1.bias', 'act_fc1.weight', 'act_fc1.bias', 'val_conv1.weight', 'val_conv1.bias', 'val_fc1.weight', 'val_fc1.bias', 'val_fc2.weight', 'val_fc2.bias'])
+Demonstrating a game between best_policy_8_8_5_ResNet and HeuristicPlayer.
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       _       _       _       _       _    
+
+
+   3   _       _       _       _       _       _       _       _    
+
+
+   2   _       _       _       _       _       _       _       _    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       _       X       _       _       _    
+
+
+   3   _       _       _       _       _       _       _       _    
+
+
+   2   _       _       _       _       _       _       _       _    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       _       X       _       _       _    
+
+
+   3   _       _       _       _       _       _       _       _    
+
+
+   2   _       _       _       _       _       O       _       _    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       _       X       _       _       _    
+
+
+   3   _       _       _       X       _       _       _       _    
+
+
+   2   _       _       _       _       _       O       _       _    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       _       X       _       _       _    
+
+
+   3   _       _       _       X       _       _       _       _    
+
+
+   2   _       _       _       O       _       O       _       _    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       _       X       _       _       _    
+
+
+   3   _       _       _       X       X       _       _       _    
+
+
+   2   _       _       _       O       _       O       _       _    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       _       X       _       _       _    
+
+
+   3   _       _       _       X       X       _       _       _    
+
+
+   2   _       _       _       O       O       O       _       _    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       _       X       _       _       _    
+
+
+   3   _       _       _       X       X       _       _       _    
+
+
+   2   _       _       X       O       O       O       _       _    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       _       X       _       _       _    
+
+
+   3   _       _       _       X       X       _       _       _    
+
+
+   2   _       _       X       O       O       O       O       _    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       _       X       _       _       _    
+
+
+   3   _       _       _       X       X       _       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       _       X       _       _       _    
+
+
+   3   _       _       _       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       X       X       _       _       _    
+
+
+   3   _       _       _       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       X       X       O       _       _    
+
+
+   3   _       _       _       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       _       _       _    
+
+
+   4   _       _       _       X       X       O       _       _    
+
+
+   3   _       _       _       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       _       _       _    
+
+
+   5   _       _       _       _       _       O       _       _    
+
+
+   4   _       _       _       X       X       O       _       _    
+
+
+   3   _       _       _       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       X       _       _    
+
+
+   5   _       _       _       _       _       O       _       _    
+
+
+   4   _       _       _       X       X       O       _       _    
+
+
+   3   _       _       _       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       X       _       _    
+
+
+   5   _       _       _       O       _       O       _       _    
+
+
+   4   _       _       _       X       X       O       _       _    
+
+
+   3   _       _       _       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       X       _       _    
+
+
+   5   _       _       _       O       _       O       _       _    
+
+
+   4   _       _       _       X       X       O       _       _    
+
+
+   3   _       _       X       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       X       _       _    
+
+
+   5   _       _       _       O       O       O       _       _    
+
+
+   4   _       _       _       X       X       O       _       _    
+
+
+   3   _       _       X       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       X       _       _    
+
+
+   5   _       _       X       O       O       O       _       _    
+
+
+   4   _       _       _       X       X       O       _       _    
+
+
+   3   _       _       X       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       X       _       _    
+
+
+   5   _       _       X       O       O       O       O       _    
+
+
+   4   _       _       _       X       X       O       _       _    
+
+
+   3   _       _       X       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       X       _       _    
+
+
+   5   _       _       X       O       O       O       O       X    
+
+
+   4   _       _       _       X       X       O       _       _    
+
+
+   3   _       _       X       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       X       _       _    
+
+
+   5   _       _       X       O       O       O       O       X    
+
+
+   4   _       _       O       X       X       O       _       _    
+
+
+   3   _       _       X       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       X       _       _    
+
+
+   5   _       _       X       O       O       O       O       X    
+
+
+   4   _       _       O       X       X       O       _       _    
+
+
+   3   _       X       X       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       X       _       _    
+
+
+   5   _       O       X       O       O       O       O       X    
+
+
+   4   _       _       O       X       X       O       _       _    
+
+
+   3   _       X       X       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5       6       7
+
+   7   _       _       _       _       _       _       _       _    
+
+
+   6   _       _       _       _       _       X       _       _    
+
+
+   5   _       O       X       O       O       O       O       X    
+
+
+   4   _       _       O       X       X       O       _       _    
+
+
+   3   X       X       X       X       X       O       _       _    
+
+
+   2   _       _       X       O       O       O       O       X    
+
+
+   1   _       _       _       _       _       X       _       _    
+
+
+   0   _       _       _       _       _       _       _       _    
+
+
+Game end. Winner is HeuristicPlayer 1
+The model name for Winner is: Heuristic
+Total running time: 57.51 seconds

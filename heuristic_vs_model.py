@@ -8,6 +8,10 @@ from policy_value_net_numpy import PolicyValueNetNumpy as TheanoPolicyValueNet
 from policy_value_net_pytorch_ResNet import PolicyValueNet as PytorchPolicyValueNet
 import pickle
 import torch
+import os
+from tqdm import tqdm
+import sys
+import time  # Import the time module
 
 class HeuristicPlayer:
     """A heuristic-based player, structured similarly to MCTSPlayer."""
@@ -200,15 +204,23 @@ def main(model_name, mode):
         with open(model_file, 'rb') as f:
             try:
                 # Attempt to load as a pickle file
+                os.environ['THEANO_FLAGS'] = 'device=cuda,floatX=float32'
                 policy_param = pickle.load(f, encoding='latin1')
                 print("Loaded model file as a pickle.")
                 best_policy = TheanoPolicyValueNet(width, height, policy_param)
             except pickle.UnpicklingError:
                 # If pickle fails, try loading as a PyTorch model
                 f.seek(0)  # Reset file pointer to the beginning
-                policy_param = torch.load(f, map_location=torch.device('cpu'))  # Load PyTorch model
+                policy_param = torch.load(f, map_location=torch.device('cuda'), weights_only=True)  # Load PyTorch model
                 print("Loaded model file as a PyTorch model.")
-                best_policy = PytorchPolicyValueNet(width, height, policy_param)
+                best_policy = PytorchPolicyValueNet(width, height)
+                best_policy.policy_value_net.load_state_dict(policy_param)
+                print(type(policy_param))  # Should output <class 'dict'> for state_dict
+                if isinstance(policy_param, dict):
+                    print("Keys in policy_param (state_dict):", policy_param.keys())
+                else:
+                    print("Loaded policy_param is not a state_dict. Check your model file format.")
+
     except FileNotFoundError:
         raise ValueError(f"Model file '{model_file}' not found.")
 
@@ -222,16 +234,17 @@ def main(model_name, mode):
     if mode == "dem":
         print(f"Demonstrating a game between {model_name} and HeuristicPlayer.")
         winner = game.start_play(heuristic_player, mcts_player, start_player=0, is_shown=1)
-        print("Game over. Winner:", "Heuristic" if winner == heuristic_player.player else "Model" if winner == mcts_player.player else "Tie")
+        print("The model name for Winner is:", "Heuristic" if winner == heuristic_player.player else model_name if winner == mcts_player.player else "Tie")
 
     elif mode == "rate":
-        print(f"Rating {model_name} against HeuristicPlayer over 100 games.")
+        num_games = 10
+        print(f"Rating {model_name} against HeuristicPlayer over {num_games} games.")
         win_count = 0
-        for _ in range(100):
+        for _ in tqdm(range(num_games), desc="Progress", unit="game"):
             winner = game.start_play(heuristic_player, mcts_player, start_player=random.randint(0, 1), is_shown=0)
             if winner == mcts_player.player:
                 win_count += 1
-        win_rate = win_count / 100 * 100
+        win_rate = win_count / num_games * 100
         print(f"Win rate of {model_name} against HeuristicPlayer: {win_rate}%")
 
     else:
@@ -242,13 +255,16 @@ if __name__ == "__main__":
     # main("best_policy_8_8_5", "dem") for demonstration
     # main("best_policy_8_8_5", "rate") for rating
     # main("best_policy_8_8_5", "dem")
-    main("best_policy_8_8_5_ResNet", "dem")
-#     import sys
-#     if len(sys.argv) != 3:
-#         print("Usage: python heuristic_vs_model.py <model_name> <mode>")
-#         print("Example: python heuristic_vs_model.py best_policy_8_8_5 dem")
-#     else:
-#         main(sys.argv[1], sys.argv[2])
+    # main("best_policy_6_6_4_ResNet", "dem")
+    if len(sys.argv) != 3:
+        print("Usage: python heuristic_vs_model.py <model_name> <mode>")
+        print("Example: python heuristic_vs_model.py best_policy_8_8_5 dem")
+    else:
+        start_time = time.time()
+        main(sys.argv[1], sys.argv[2])
+        end_time = time.time()  # Record the end time
+        elapsed_time = end_time - start_time  # Calculate elapsed time
+        print(f"Total running time: {elapsed_time:.2f} seconds")
 # #    Set board parameters
 #     width, height = 6, 6
 #     n_in_row = 4  # Winning condition: 4 in a row
