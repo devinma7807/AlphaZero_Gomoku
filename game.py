@@ -74,14 +74,24 @@ class Board(object):
             square_state[3][:, :] = 1.0  # indicate the colour to play
         return square_state[:, ::-1, :]
 
-    def do_move(self, move):
-        self.states[move] = self.current_player
-        self.availables.remove(move)
+    def switch_player(self):
         self.current_player = (
             self.players[0] if self.current_player == self.players[1]
             else self.players[1]
         )
+
+    def do_move(self, move):
+        self.states[move] = self.current_player
+        self.availables.remove(move)
+        self.switch_player()
         self.last_move = move
+
+    def remove_last_move(self, reset_last_move):
+        """Use to reverse a move and reset last_move"""
+        del self.states[self.last_move]
+        self.availables.append(self.last_move)
+        self.switch_player()
+        self.last_move = reset_last_move
 
     def has_a_winner(self):
         width = self.width
@@ -195,6 +205,7 @@ class Game(object):
         p1, p2 = self.board.players
         states, mcts_probs, current_players = [], [], []
         while True:
+            # get move and move probabilities from MCTS agent
             move, move_probs = player.get_action(self.board,
                                                  temp=temp,
                                                  return_prob=1)
