@@ -4,8 +4,10 @@
 """
 
 from __future__ import print_function
-import numpy as np
 
+import datetime
+
+import numpy as np
 
 class Board(object):
     """board for the game"""
@@ -205,6 +207,7 @@ class Game(object):
         p1, p2 = self.board.players
         states, action_probs, current_players = [], [], []
         while True:
+            print(f'Start action search at time {datetime.datetime.now()}')
             # get move and move probabilities from player agent
             move, move_probs = player.get_action(self.board,
                                                  temp=temp,
@@ -214,6 +217,7 @@ class Game(object):
             action_probs.append(move_probs)
             current_players.append(self.board.current_player)
             # perform a move
+            print(f"Selected Action: {move}")
             self.board.do_move(move)
             if is_shown:
                 self.graphic(self.board, p1, p2)

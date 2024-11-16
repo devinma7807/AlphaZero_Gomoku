@@ -6,6 +6,8 @@ An implementation of the training pipeline of AlphaZero for Gomoku
 """
 
 from __future__ import print_function
+
+import datetime
 import random
 import numpy as np
 from collections import defaultdict, deque
@@ -99,9 +101,10 @@ class TrainPipeline():
     def collect_selfplay_data(self, n_games):
         """collect self-play data for training"""
         for i in range(n_games):
-            print(f'Played game{i}')
+            print(f'Start to play game {i} at time {datetime.datetime.now()}')
             winner, play_data = self.game.start_self_play(self.fictitious_agent,
                                                           temp=self.temp)
+            print(f'Finished playing game {i} at time {datetime.datetime.now()}')
             play_data = list(play_data)[:]
             self.episode_len = len(play_data)
             # augment the data
