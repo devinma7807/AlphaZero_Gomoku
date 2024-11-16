@@ -35,7 +35,7 @@ class StateNode(object):
         self.policy_value_function = policy_value_function
 
         # get action prior from the policy network with just available moves
-        action_priors, _ = self.policy_value_function(board)
+        action_priors, _ = self.policy_value_function(self.board)
         # maps from available action to its prior policy probability
         self.action_priors = convert_action_priors(action_priors)
         self.total_actions = len(self.action_priors)
@@ -98,8 +98,12 @@ class Fictitious_Agent(object):
             _, state_value = self.policy_value_function(state_node.board)
             return state_value
         else:
-            # randomly sample the actions to branch out from the prior probabilities
-            action_sample = state_node.sample_actions()
+            # randomly sample the actions to branch out from the prior probabilities to limit branch factor
+            if len(state_node.action_priors) > ACTION_SAMPLE_COUNT:
+                action_sample = state_node.sample_actions()
+            else:
+                # TODO: check this
+                action_sample = state_node.board.availables
 
             action_state_values = dict()
             maximum_action_value = float('-inf')
@@ -113,38 +117,44 @@ class Fictitious_Agent(object):
                     next_state = state_node.children[action]
                 else:
                     next_state = StateNode(state_node.board, self.policy_value_function)
+                    state_node.children[action] = next_state
 
                 next_state_value = self.action_search(next_state, depth - 1)
-                # multiply by -1 sine the return value is from the opponent's perspective
+                # multiply by -1 since the return value is from the opponent's perspective
                 next_state_value = -1 * next_state_value
 
-                maximum_action_value = max(maximum_action_value, next_state_value)
-                if maximum_action_value == next_state_value:
+                if next_state_value > maximum_action_value:
+                    maximum_action_value = next_state_value
                     optimal_action = action
 
-                action_state_values[action] = next_state_value
                 state_node.board.remove_last_move(save_last_move)
+                action_state_values[action] = next_state_value
 
             state_node.action_counts[optimal_action] += 1
             state_node.total_actions += 1
             state_value = state_node.get_expected_state_value(action_state_values)
+
             return state_value
 
-    def run_simulations(self, board: Board):
+    def run_simulations(self):
         state_node = self.root_node
         for simulation in range(self.simulations):
             state_value = self.action_search(state_node, self.depth)
         action_probs = state_node.get_action_probabilities()
         return action_probs
 
+    def init_root_node(self, board):
+        self.root_node = StateNode(board, self.policy_value_function)
+
     def get_action(self, board, return_prob = False, temp=None):
         # TODO: delete temp if wanted
         # initialize root node
-        if not self.root_node: self.root_node = StateNode(board, self.policy_value_function)
+        if not self.root_node: self.init_root_node(board)
 
         action_probs = np.zeros(board.width * board.height)
         # maps actions to its policy prob
-        policy = self.run_simulations(board)
+        policy = self.run_simulations()
+
         search_actions, search_probs = np.array(list(policy.keys())), np.array(list(policy.values()))
         # action probability data to use for training the networks
         action_probs[search_actions] = search_probs
@@ -154,8 +164,10 @@ class Fictitious_Agent(object):
             select_action = np.random.choice(search_actions,
                                              p=0.75 * search_probs + 0.25 * np.random.dirichlet(0.3 * np.ones(len(search_probs)))
             )
+            self.update_root_node(select_action)
         else:
             select_action = max(policy, key=policy.get)
+            self.update_root_node(None)
 
         if return_prob:
             return select_action, action_probs

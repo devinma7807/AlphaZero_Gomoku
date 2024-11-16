@@ -21,33 +21,42 @@ from policy_value_net_pytorch import PolicyValueNet  # Pytorch
 class TrainPipeline():
     def __init__(self, init_model=None):
         # params of the board and the game
-        self.board_width = 6
-        self.board_height = 6
-        self.n_in_row = 4
+        self.board_width = 4
+        self.board_height = 4
+        self.n_in_row = 3
+        self.n_playout = 10  # num of simulations for each move
+
         self.board = Board(width=self.board_width,
                            height=self.board_height,
                            n_in_row=self.n_in_row)
         self.game = Game(self.board)
+
         # training params
         self.learn_rate = 2e-3
         self.lr_multiplier = 1.0  # adaptively adjust the learning rate based on KL
         self.temp = 1.0  # the temperature param
-        self.n_playout = 400  # num of simulations for each move
-        self.c_puct = 5
-        self.buffer_size = 10000
-        self.batch_size = 512  # mini-batch size for training
+        self.buffer_size = 1000
+        self.batch_size = 1  # mini-batch size for training
         self.data_buffer = deque(maxlen=self.buffer_size)
         self.play_batch_size = 1
         self.epochs = 5  # num of train_steps for each update
         self.kl_targ = 0.02
-        self.check_freq = 50
         self.game_batch_num = 1500
-        self.best_win_ratio = 0.0
         # TODO: change depth if needed
         self.depth = 5
+
+        #TODO: delete below
+        self.c_puct = 5
+        # up to here
+
+        # Parameters used for evaluation
+        self.check_freq = 50
+        self.best_win_ratio = 0.0
         # num of simulations used for the pure mcts, which is used as
         # the opponent to evaluate the trained policy
         self.pure_mcts_playout_num = 1000
+
+        # initialize network models
         if init_model:
             # start training from an initial policy-value net
             self.policy_value_net = PolicyValueNet(self.board_width,
@@ -96,6 +105,7 @@ class TrainPipeline():
             # augment the data
             play_data = self.get_equi_data(play_data)
             self.data_buffer.extend(play_data)
+
 
     def policy_update(self):
         """update the policy-value net"""
