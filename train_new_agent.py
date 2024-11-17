@@ -192,6 +192,7 @@ class TrainPipeline():
                         i+1, self.episode_len))
                 if len(self.data_buffer) > self.batch_size:
                     loss, entropy = self.policy_update()
+                print(f"Trained game batch {i} at time {datetime.datetime.now()}")
                 # check the performance of the current model,
                 # and save the model params
                 if (i+1) % self.check_freq == 0:
