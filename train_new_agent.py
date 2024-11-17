@@ -38,12 +38,15 @@ class TrainPipeline():
         self.lr_multiplier = 1.0  # adaptively adjust the learning rate based on KL
         self.temp = 1.0  # the temperature param
         self.buffer_size = 10000
-        self.batch_size = 512  # mini-batch size for training
         self.data_buffer = deque(maxlen=self.buffer_size)
         self.play_batch_size = 1
         self.epochs = 5  # num of train_steps for each update
         self.kl_targ = 0.02
-        self.game_batch_num = 1500
+
+        # Params to change
+        self.batch_size = 1#512  # mini-batch size for training
+        self.game_batch_num = 1#1500
+        self.check_freq = 1 #50
 
         # TODO: change depth if needed
         self.depth = self.n_in_row
@@ -53,7 +56,6 @@ class TrainPipeline():
         # up to here
 
         # Parameters used for evaluation
-        self.check_freq = 50
         self.best_win_ratio = 0.0
         # num of simulations used for the pure mcts, which is used as
         # the opponent to evaluate the trained policy
