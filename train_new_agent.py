@@ -45,13 +45,13 @@ class TrainPipeline():
         # Params to change
         self.n_playout = 20 # 400 num of simulations for each move
         self.game_batch_num = 500 #1500 number of self-play games
-        self.batch_size = int(self.game_batch_num/3) # 512  # mini-batch size for training
-        self.check_freq = int(self.game_batch_num/30) #50 how often to evaluate the model
+        self.batch_size = 10 # 512  # mini-batch size for training
+        self.check_freq = 20 # 50 how often to evaluate the model
         # num of simulations used for the pure mcts, which is used as
         # the opponent to evaluate the trained policy
         self.pure_mcts_playout_num = 100
-        self.pure_mcts_step = self.n_playout #1000
-        self.pure_mcts_max_num = self.n_playout * 5 #5000
+        self.pure_mcts_step = 100 #1000
+        self.pure_mcts_max_num = 500 #5000
 
         # TODO: change depth if needed
         self.depth = 3
