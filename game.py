@@ -173,6 +173,7 @@ class Game(object):
 
     def start_play(self, player1, player2, start_player=0, is_shown=1):
         """start a game between two players"""
+        #player 1 is selfplay FPA
         if start_player not in (0, 1):
             raise Exception('start_player should be either 0 (player1 first) '
                             'or 1 (player2 first)')
@@ -187,6 +188,7 @@ class Game(object):
             current_player = self.board.get_current_player()
             player_in_turn = players[current_player]
             move = player_in_turn.get_action(self.board)
+            print(f"Player {current_player} selected move {move}")
             self.board.do_move(move)
             if is_shown:
                 self.graphic(self.board, player1.player, player2.player)
