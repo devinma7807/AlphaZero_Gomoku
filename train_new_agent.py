@@ -26,7 +26,6 @@ class TrainPipeline():
         self.board_width = 6
         self.board_height = 6
         self.n_in_row = 4
-        self.n_playout = 400  # num of simulations for each move
 
         self.board = Board(width=self.board_width,
                            height=self.board_height,
@@ -44,9 +43,15 @@ class TrainPipeline():
         self.kl_targ = 0.02
 
         # Params to change
-        self.batch_size = 1#512  # mini-batch size for training
-        self.game_batch_num = 1#1500
-        self.check_freq = 1 #50
+        self.n_playout = 1 #100 # 400 num of simulations for each move
+        self.game_batch_num = 1#500#1500 number of self-play games
+        self.batch_size = 1#int(self.game_batch_num/3) # 512  # mini-batch size for training
+        self.check_freq = 1#int(self.game_batch_num/30) #50 how often to evluate the model
+        # num of simulations used for the pure mcts, which is used as
+        # the opponent to evaluate the trained policy
+        self.pure_mcts_playout_num = self.n_playout #1000
+        self.pure_mcts_step = self.n_playout #1000
+        self.pure_mcts_max_num = self.n_playout * 5 #5000
 
         # TODO: change depth if needed
         self.depth = self.n_in_row
@@ -57,9 +62,6 @@ class TrainPipeline():
 
         # Parameters used for evaluation
         self.best_win_ratio = 0.0
-        # num of simulations used for the pure mcts, which is used as
-        # the opponent to evaluate the trained policy
-        self.pure_mcts_playout_num = 1000
 
         # initialize network models
         if init_model:
@@ -200,15 +202,16 @@ class TrainPipeline():
                 if (i+1) % self.check_freq == 0:
                     print("current self-play batch: {}".format(i+1))
                     win_ratio = self.policy_evaluate()
-                    self.policy_value_net.save_model('./current_policy.model')
+                    print(f"Win Ratio: {win_ratio}")
+                    self.policy_value_net.save_model('./current_policy_FPA_6_by_6.model')
                     if win_ratio > self.best_win_ratio:
                         print("New best policy!!!!!!!!")
                         self.best_win_ratio = win_ratio
                         # update the best_policy
-                        self.policy_value_net.save_model('./best_policy.model')
+                        self.policy_value_net.save_model('./best_policy_FPA_6_by_6.model')
                         if (self.best_win_ratio == 1.0 and
-                                self.pure_mcts_playout_num < 5000):
-                            self.pure_mcts_playout_num += 1000
+                                self.pure_mcts_playout_num < self.pure_mcts_max_num):
+                            self.pure_mcts_playout_num += self.pure_mcts_step
                             self.best_win_ratio = 0.0
         except KeyboardInterrupt:
             print('\n\rquit')
