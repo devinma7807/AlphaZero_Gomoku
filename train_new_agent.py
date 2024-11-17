@@ -43,7 +43,7 @@ class TrainPipeline():
         self.kl_targ = 0.02
 
         # Params to change
-        self.n_playout = 50 # 400 num of simulations for each move
+        self.n_playout = 20 # 400 num of simulations for each move
         self.game_batch_num = 500 #1500 number of self-play games
         self.batch_size = int(self.game_batch_num/3) # 512  # mini-batch size for training
         self.check_freq = int(self.game_batch_num/30) #50 how often to evaluate the model
@@ -54,7 +54,7 @@ class TrainPipeline():
         self.pure_mcts_max_num = self.n_playout * 5 #5000
 
         # TODO: change depth if needed
-        self.depth = self.n_in_row
+        self.depth = 3
 
         #TODO: delete below
         self.c_puct = 5
