@@ -139,6 +139,7 @@ class Fictitious_Agent(object):
     def run_simulations(self):
         state_node = self.root_node
         for simulation in range(self.simulations):
+            print(f"Running simulation {simulation}")
             state_value = self.action_search(state_node, self.depth)
         action_probs = state_node.get_action_probabilities()
         return action_probs
