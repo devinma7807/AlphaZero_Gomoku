@@ -188,17 +188,17 @@ class Game(object):
             current_player = self.board.get_current_player()
             player_in_turn = players[current_player]
             move = player_in_turn.get_action(self.board)
-            print(f"Player {current_player} selected move {move}")
             self.board.do_move(move)
             if is_shown:
                 self.graphic(self.board, player1.player, player2.player)
             end, winner = self.board.game_end()
             if end:
-                if is_shown:
-                    if winner != -1:
-                        print("Game end. Winner is", players[winner])
-                    else:
-                        print("Game end. Tie")
+                #TODO: add it back
+                #if is_shown:
+                if winner != -1:
+                    print("Game end. Winner is", players[winner])
+                else:
+                    print("Game end. Tie")
                 return winner
 
     def start_self_play(self, player, is_shown=0, temp=1e-3):
@@ -208,8 +208,8 @@ class Game(object):
         self.board.init_board()
         p1, p2 = self.board.players
         states, action_probs, current_players = [], [], []
+        action_n = 0
         while True:
-            print(f'Start action search at time {datetime.datetime.now()}')
             # get move and move probabilities from player agent
             move, move_probs = player.get_action(self.board,
                                                  temp=temp,
@@ -219,12 +219,13 @@ class Game(object):
             action_probs.append(move_probs)
             current_players.append(self.board.current_player)
             # perform a move
-            print(f"Selected Action: {move}")
             self.board.do_move(move)
+            action_n += 1
             if is_shown:
                 self.graphic(self.board, p1, p2)
             end, winner = self.board.game_end()
             if end:
+                print(f"Played {action_n} actions for this game")
                 # winner from the perspective of the current player of each state
                 winners_z = np.zeros(len(current_players))
                 if winner != -1:

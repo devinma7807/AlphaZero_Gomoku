@@ -105,10 +105,8 @@ class TrainPipeline():
     def collect_selfplay_data(self, n_games):
         """collect self-play data for training"""
         for i in range(n_games):
-            print(f'Start to play game {i} at time {datetime.datetime.now()}')
             winner, play_data = self.game.start_self_play(self.fictitious_agent,
                                                           temp=self.temp)
-            print(f'Finished playing game {i} at time {datetime.datetime.now()}')
             play_data = list(play_data)[:]
             self.episode_len = len(play_data)
             # augment the data
@@ -191,16 +189,17 @@ class TrainPipeline():
         """run the training pipeline"""
         try:
             for i in range(self.game_batch_num):
+                print(f"Start Batch {i} at time {datetime.datetime.now()}")
                 self.collect_selfplay_data(self.play_batch_size)
                 print("batch i:{}, episode_len:{}".format(
                         i+1, self.episode_len))
                 if len(self.data_buffer) > self.batch_size:
                     loss, entropy = self.policy_update()
-                print(f"Trained game batch {i} at time {datetime.datetime.now()}")
+                    print(f"Trained game batch {i} at time {datetime.datetime.now()}")
                 # check the performance of the current model,
                 # and save the model params
                 if (i+1) % self.check_freq == 0:
-                    print("current self-play batch: {}".format(i+1))
+                    print("current self-play batch used to evaluate agent: {}".format(i+1))
                     win_ratio = self.policy_evaluate()
                     print(f"Win Ratio: {win_ratio}")
                     self.policy_value_net.save_model('./FPA_Outputs/current_policy_FPA_6_by_6.model')
