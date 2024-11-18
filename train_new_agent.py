@@ -45,11 +45,9 @@ class TrainPipeline():
         # Params to change
         self.n_playout = 20 # 400 num of simulations for each move
         self.game_batch_num = 500 #1500 number of self-play games
-        # TODO: change back to 500
-        self.batch_size = 100 # 512  # mini-batch size for training
+        self.batch_size = 500 # 512  # mini-batch size for training
         self.check_freq = 30 # 50 how often to evaluate the model
-        # TODO: change back to 20
-        self.save_freq = 1 # how often to save the model
+        self.save_freq = 20 # how often to save the model
         # num of simulations used for the pure mcts, which is used as
         # the opponent to evaluate the trained policy
         self.pure_mcts_playout_num = 100
@@ -201,6 +199,7 @@ class TrainPipeline():
                     print(f"Trained game batch {i} at time {datetime.datetime.now()}")
                     if i % self.save_freq == 0:
                         self.policy_value_net.save_model('./FPA_Outputs/current_policy_FPA_6_by_6.model')
+                        print(f"Saved Model at time {datetime.datetime.now()}")
                 # check the performance of the current model,
                 # and save the model params
                 if (i+1) % self.check_freq == 0:
