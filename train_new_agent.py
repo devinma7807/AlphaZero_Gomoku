@@ -45,9 +45,11 @@ class TrainPipeline():
         # Params to change
         self.n_playout = 20 # 400 num of simulations for each move
         self.game_batch_num = 500 #1500 number of self-play games
-        self.batch_size = 500 # 512  # mini-batch size for training
+        # TODO: change back to 500
+        self.batch_size = 100 # 512  # mini-batch size for training
         self.check_freq = 30 # 50 how often to evaluate the model
-        self.save_freq = 20 # how often to save the model
+        # TODO: change back to 20
+        self.save_freq = 1 # how often to save the model
         # num of simulations used for the pure mcts, which is used as
         # the opponent to evaluate the trained policy
         self.pure_mcts_playout_num = 100
