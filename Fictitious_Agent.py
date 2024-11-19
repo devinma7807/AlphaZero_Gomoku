@@ -77,6 +77,9 @@ class Fictitious_Agent(object):
         self.root_node = None
         self.player = None
 
+    def __repr__(self):
+        return "FictitiousAgent"
+
     @ staticmethod
     def get_winning_score(state_node: StateNode, winner: int):
         if winner == TIE:
