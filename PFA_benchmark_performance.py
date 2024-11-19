@@ -28,7 +28,7 @@ def get_benchmark_player(benchmark):
     elif benchmark == BenchmarkModel.Heuristic:
         benchmark_player = HeuristicPlayer()
     elif benchmark == BenchmarkModel.PureMcts:
-        benchmark_player = MCTS_Pure(c_puct=5, n_playout=400)
+        benchmark_player = MCTS_Pure(c_puct=5, n_playout=100)
     else:
         raise ValueError("Benchmark Model Needs to be Initialized")
     return benchmark_player
@@ -75,7 +75,7 @@ def main(model_name, mode, benchmark):
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_file", type=str, default = r"FPA_Outputs/best_policy_FPA360_6_6_4")
+    parser.add_argument("--model_file", type=str, default = r"FPA_Outputs/best_policy_FPA450_6_6_4")
     parser.add_argument("--benchmark_model", type=str, default=BenchmarkModel.PureMcts.name, help='Needs to be part of setup in BenchmarkModel')
     parser.add_argument('--mode', type=str, default = 'rate', help = 'rate or dem')
     return parser

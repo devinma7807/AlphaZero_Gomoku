@@ -53,15 +53,10 @@ class TrainPipeline():
         self.pure_mcts_playout_num = 100
         self.pure_mcts_step = 100 #1000
         self.pure_mcts_max_num = 500 #5000
-
-        # TODO: change depth if needed
         self.depth = 3
 
-        #TODO: delete below
-        self.c_puct = 5
-        # up to here
-
         # Parameters used for evaluation
+        self.c_puct = 5
         self.best_win_ratio = 0.0
 
         # initialize network models
@@ -171,7 +166,7 @@ class TrainPipeline():
                                                      simulations=self.n_playout,
                                                      depth=self.depth)
 
-        pure_mcts_player = MCTS_Pure(c_puct=5,
+        pure_mcts_player = MCTS_Pure(c_puct=self.c_puct,
                                      n_playout=self.pure_mcts_playout_num)
         win_cnt = defaultdict(int)
         for i in range(n_games):
