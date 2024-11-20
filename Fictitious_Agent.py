@@ -22,7 +22,7 @@ TRAINING_PARAMETERS = {'6_6_4': {'n_playout': 20, # num of simulations for each 
                                  'pure_mcts_max_num': 500,
                                  'depth': 3,
                                  'action_sample_count': 5},
-                       '8_8_5': {'n_playout': 30,
+                       '8_8_5': {'n_playout': 20,
                                  'game_batch_num': 900,
                                  'batch_size': 500,
                                  'check_freq': 30,
@@ -30,8 +30,8 @@ TRAINING_PARAMETERS = {'6_6_4': {'n_playout': 20, # num of simulations for each 
                                  'pure_mcts_playout_num': 100,
                                  'pure_mcts_step': 100,
                                  'pure_mcts_max_num': 500,
-                                 'depth': 4,
-                                 'action_sample_count': 3}
+                                 'depth': 3,
+                                 'action_sample_count': 5}
                        }
 
 TIE = -1
