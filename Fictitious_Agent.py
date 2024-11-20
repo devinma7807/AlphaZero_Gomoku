@@ -9,14 +9,31 @@ import numpy as np
 
 from game import Board
 
+def get_fpa_param_key(width: int, height: int, n_in_row: int):
+    return f"{width}_{height}_{n_in_row}"
 
-#
-# set_player_ind
-# reset_player
-# get_action
-# move_to_location
+TRAINING_PARAMETERS = {'6_6_4': {'n_playout': 20, # num of simulations for each move
+                                 'game_batch_num': 500, # number of self-play games
+                                 'batch_size': 500, # mini-batch size for training
+                                 'check_freq': 30, # how often to evaluate the model
+                                 'save_freq': 20, # how often to save the model
+                                 'pure_mcts_playout_num': 100,
+                                 'pure_mcts_step': 100,
+                                 'pure_mcts_max_num': 500,
+                                 'depth': 3,
+                                 'action_sample_count': 5},
+                       '8_8_5': {'n_playout': 30,
+                                 'game_batch_num': 900,
+                                 'batch_size': 500,
+                                 'check_freq': 30,
+                                 'save_freq': 20,
+                                 'pure_mcts_playout_num': 100,
+                                 'pure_mcts_step': 100,
+                                 'pure_mcts_max_num': 500,
+                                 'depth': 4,
+                                 'action_sample_count': 3}
+                       }
 
-ACTION_SAMPLE_COUNT = 5
 TIE = -1
 
 def convert_action_priors(action_priors: List) -> Dict:
@@ -30,7 +47,7 @@ def normalize_probabilities(probabilities: List):
 
 class StateNode(object):
     """A node in the game tree"""
-    def __init__(self, board: Board, policy_value_function):
+    def __init__(self, board: Board, policy_value_function, action_sample_count):
         self.board = board
         self.policy_value_function = policy_value_function
 
@@ -45,11 +62,12 @@ class StateNode(object):
 
         # initialize action_counts to 1 for all actions
         self.action_counts = {action: 1 for action in self.action_priors}
+        self.action_sample_count = action_sample_count
 
     def sample_actions(self):
         return np.random.choice(list(self.action_priors.keys()),
                                 p=normalize_probabilities(list(self.action_priors.values())),
-                                size=ACTION_SAMPLE_COUNT,
+                                size=self.action_sample_count,
                                 replace=False)
 
 
@@ -65,7 +83,7 @@ class StateNode(object):
 
 
 class Fictitious_Agent(object):
-    def __init__(self, policy_value_function, self_play: bool, simulations: int, depth: int):
+    def __init__(self, policy_value_function, self_play: bool, simulations: int, depth: int, action_sample_count:int):
         # policy_value_function takes a board object and outputs
         # 1) list of (action, probability) tuples
         # 2) state value in [-1, 1] in current player's perspective
@@ -76,6 +94,7 @@ class Fictitious_Agent(object):
         self.self_play = self_play
         self.root_node = None
         self.player = None
+        self.action_sample_count = action_sample_count
 
     def __repr__(self):
         return "FictitiousAgent"
@@ -102,7 +121,7 @@ class Fictitious_Agent(object):
             return state_value
         else:
             # randomly sample the actions to branch out from the prior probabilities to limit branch factor
-            if len(state_node.action_priors) > ACTION_SAMPLE_COUNT:
+            if len(state_node.action_priors) > self.action_sample_count:
                 action_sample = state_node.sample_actions()
             else:
                 # TODO: check this
@@ -119,7 +138,7 @@ class Fictitious_Agent(object):
                 if action in state_node.children:
                     next_state = state_node.children[action]
                 else:
-                    next_state = StateNode(state_node.board, self.policy_value_function)
+                    next_state = StateNode(state_node.board, self.policy_value_function, self.action_sample_count)
                     state_node.children[action] = next_state
 
                 next_state_value = self.action_search(next_state, depth - 1)
@@ -147,7 +166,7 @@ class Fictitious_Agent(object):
         return action_probs
 
     def init_root_node(self, board):
-        self.root_node = StateNode(board, self.policy_value_function)
+        self.root_node = StateNode(board, self.policy_value_function, self.action_sample_count)
 
     def get_action(self, board, return_prob = False, temp=None):
         # TODO: delete temp if wanted
@@ -190,3 +209,4 @@ class Fictitious_Agent(object):
 
     def reset_player(self):
        self.update_root_node(None)
+

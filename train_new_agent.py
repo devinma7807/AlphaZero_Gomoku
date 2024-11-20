@@ -13,24 +13,24 @@ import numpy as np
 from collections import defaultdict, deque
 from game import Board, Game
 from mcts_pure import MCTSPlayer as MCTS_Pure
-from Fictitious_Agent import Fictitious_Agent
+from Fictitious_Agent import Fictitious_Agent, TRAINING_PARAMETERS, get_fpa_param_key
 # from policy_value_net import PolicyValueNet  # Theano and Lasagne
 from policy_value_net_pytorch import PolicyValueNet  # Pytorch
 # from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
 # from policy_value_net_keras import PolicyValueNet # Keras
 
-
 class TrainPipeline():
     def __init__(self, init_model=None):
         # params of the board and the game
-        self.board_width = 6
-        self.board_height = 6
-        self.n_in_row = 4
+        self.board_width = 8
+        self.board_height = 8
+        self.n_in_row = 5
 
         self.board = Board(width=self.board_width,
                            height=self.board_height,
                            n_in_row=self.n_in_row)
         self.game = Game(self.board)
+        self.board_type =get_fpa_param_key(self.board_width, self.board_height, self.n_in_row)
 
         # training params
         self.learn_rate = 2e-3
@@ -43,19 +43,19 @@ class TrainPipeline():
         self.kl_targ = 0.02
 
         # Params to change
-        self.n_playout = 20 # 400 num of simulations for each move
-        self.game_batch_num = 500 #1500 number of self-play games
-        self.batch_size = 500 # 512  # mini-batch size for training
-        self.check_freq = 30 # 50 how often to evaluate the model
-        self.save_freq = 20 # how often to save the model
+        self.n_playout = TRAINING_PARAMETERS[self.board_type]['n_playout'] # 400
+        self.game_batch_num = TRAINING_PARAMETERS[self.board_type]['game_batch_num'] #1500
+        self.batch_size = TRAINING_PARAMETERS[self.board_type]['batch_size'] # 512
+        self.check_freq = TRAINING_PARAMETERS[self.board_type]['check_freq']  # 50
+        self.save_freq = TRAINING_PARAMETERS[self.board_type]['save_freq']
         # num of simulations used for the pure mcts, which is used as
         # the opponent to evaluate the trained policy
-        self.pure_mcts_playout_num = 100
-        self.pure_mcts_step = 100 #1000
-        self.pure_mcts_max_num = 500 #5000
-        self.depth = 3
+        self.pure_mcts_playout_num = TRAINING_PARAMETERS[self.board_type]['pure_mcts_playout_num']
+        self.pure_mcts_step = TRAINING_PARAMETERS[self.board_type]['pure_mcts_step'] #1000
+        self.pure_mcts_max_num = TRAINING_PARAMETERS[self.board_type]['pure_mcts_max_num'] #5000
+        self.depth = TRAINING_PARAMETERS[self.board_type]['depth']
 
-        # Parameters used for evaluation
+        # Parameters used for evaluation with pure mcts
         self.c_puct = 5
         self.best_win_ratio = 0.0
 
@@ -73,7 +73,8 @@ class TrainPipeline():
         self.fictitious_agent = Fictitious_Agent(policy_value_function=self.policy_value_net.policy_value_fn,
                                                  self_play=True,
                                                  simulations=self.n_playout,
-                                                 depth=self.depth)
+                                                 depth=self.depth,
+                                                 action_sample_count=TRAINING_PARAMETERS[self.board_type]['action_sample_count'])
 
 
     def get_equi_data(self, play_data):
@@ -164,7 +165,8 @@ class TrainPipeline():
         current_fictitious_player = Fictitious_Agent(policy_value_function=self.policy_value_net.policy_value_fn,
                                                      self_play=False,
                                                      simulations=self.n_playout,
-                                                     depth=self.depth)
+                                                     depth=self.depth,
+                                                     action_sample_count=TRAINING_PARAMETERS[self.board_type]['action_sample_count'])
 
         pure_mcts_player = MCTS_Pure(c_puct=self.c_puct,
                                      n_playout=self.pure_mcts_playout_num)

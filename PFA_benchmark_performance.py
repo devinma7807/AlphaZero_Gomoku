@@ -2,7 +2,7 @@ import argparse
 import re
 import random
 
-from Fictitious_Agent import Fictitious_Agent
+from Fictitious_Agent import Fictitious_Agent, TRAINING_PARAMETERS, get_fpa_param_key
 from game import Board, Game
 from policy_value_net_pytorch import PolicyValueNet
 from enum import Enum
@@ -51,7 +51,8 @@ def main(model_name, mode, benchmark):
     fpa_player = Fictitious_Agent(policy_value_function=best_policy.policy_value_fn,
                                   self_play=False,
                                   simulations=FPA_SIMULATIONS,
-                                  depth=FPA_DEPTHS)
+                                  depth=FPA_DEPTHS,
+                                  action_sample_count=TRAINING_PARAMETERS[get_fpa_param_key(width, height, n_in_row)]['action_sample_count'])
     benchmark_player = get_benchmark_player(benchmark)
 
     # Determine mode of operation: demonstration or rating
