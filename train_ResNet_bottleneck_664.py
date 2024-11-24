@@ -12,20 +12,16 @@ from collections import defaultdict, deque
 from game import Board, Game
 from mcts_pure import MCTSPlayer as MCTS_Pure
 from mcts_alphaZero import MCTSPlayer
-from policy_value_net_pytorch_ResNet import PolicyValueNet
-# from policy_value_net import PolicyValueNet  # Theano and Lasagne
-# from policy_value_net_pytorch import PolicyValueNet  # Pytorch
-# from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
-# from policy_value_net_keras import PolicyValueNet # Keras
+from policy_value_net_pytorch_ResNet_bottleneck import PolicyValueNet
 import datetime
 
 
 class TrainPipeline():
     def __init__(self, init_model=None):
         # params of the board and the game
-        self.board_width = 8
-        self.board_height = 8
-        self.n_in_row = 5
+        self.board_width = 6
+        self.board_height = 6
+        self.n_in_row = 4
         self.board = Board(width=self.board_width,
                            height=self.board_height,
                            n_in_row=self.n_in_row)
@@ -178,12 +174,12 @@ class TrainPipeline():
                 if (i+1) % self.check_freq == 0:
                     print("current self-play batch: {}".format(i+1))
                     win_ratio = self.policy_evaluate()
-                    self.policy_value_net.save_model('./current_policy.model')
+                    self.policy_value_net.save_model('./current_policy_bottleneck.model')
                     if win_ratio > self.best_win_ratio:
                         print("New best policy!!!!!!!!")
                         self.best_win_ratio = win_ratio
                         # update the best_policy
-                        self.policy_value_net.save_model('./best_policy.model')
+                        self.policy_value_net.save_model('./best_policy_bottleneck.model')
                         if (self.best_win_ratio == 1.0 and
                                 self.pure_mcts_playout_num < 5000):
                             self.pure_mcts_playout_num += 1000
