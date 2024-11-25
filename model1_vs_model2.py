@@ -5,7 +5,8 @@ import numpy as np
 from game import Board, Game
 from mcts_alphaZero import MCTSPlayer
 from policy_value_net_numpy import PolicyValueNetNumpy as TheanoPolicyValueNet
-from policy_value_net_pytorch_ResNet import PolicyValueNet as PytorchPolicyValueNet
+# from policy_value_net_pytorch_ResNet import PolicyValueNet as PytorchPolicyValueNet
+from policy_value_net_pytorch_ResNet_bottleneck import PolicyValueNet as PytorchPolicyValueNet
 import pickle
 import torch
 import os
@@ -76,7 +77,7 @@ def main(model_name1, model_name2, mode):
         print("The model name for Winner is:", model_name1 if winner == mcts_player1.player else model_name2 if winner == mcts_player2.player else "Tie")
 
     elif mode == "rate":
-        num_games = 3
+        num_games = 10
         print(f"Rating {model_name1} against {model_name2} over {num_games} games.")
         win_count1 = 0
         win_count2 = 0
