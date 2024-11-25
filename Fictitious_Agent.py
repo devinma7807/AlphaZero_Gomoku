@@ -31,7 +31,7 @@ TRAINING_PARAMETERS = {'6_6_4': {'n_playout': 20, # num of simulations for each 
                                  'pure_mcts_step': 100,
                                  'pure_mcts_max_num': 500,
                                  'depth': 4,
-                                 'action_sample_count': 8}
+                                 'action_sample_count': 6}
                        }
 
 TIE = -1
