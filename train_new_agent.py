@@ -195,7 +195,7 @@ class TrainPipeline():
                     loss, entropy = self.policy_update()
                     print(f"Trained game batch {i} at time {datetime.datetime.now()}")
                     if i % self.save_freq == 0:
-                        self.policy_value_net.save_model('./FPA_Outputs/current_policy_FPA_8_8_5.model')
+                        self.policy_value_net.save_model('./FPA_Outputs/current_policy_FPA_8_8_5_10_sample.model')
                         print(f"Saved Model at time {datetime.datetime.now()}")
                 # check the performance of the current model,
                 # and save the model params
@@ -203,12 +203,12 @@ class TrainPipeline():
                     print("current self-play batch used to evaluate agent: {}".format(i+1))
                     win_ratio = self.policy_evaluate()
                     print(f"Win Ratio: {win_ratio}")
-                    self.policy_value_net.save_model('./FPA_Outputs/current_policy_FPA_8_8_5.model')
+                    self.policy_value_net.save_model('./FPA_Outputs/current_policy_FPA_8_8_5_10_Sample.model')
                     if win_ratio > self.best_win_ratio:
                         print("New best policy!!!!!!!!")
                         self.best_win_ratio = win_ratio
                         # update the best_policy
-                        self.policy_value_net.save_model('./FPA_Outputs/best_policy_FPA_8_8_5.model')
+                        self.policy_value_net.save_model('./FPA_Outputs/best_policy_FPA_8_8_5_10_sample.model')
                         if (self.best_win_ratio == 1.0 and
                                 self.pure_mcts_playout_num < self.pure_mcts_max_num):
                             self.pure_mcts_playout_num += self.pure_mcts_step
