@@ -11,8 +11,7 @@ from random_vs_model import RandomPlayer
 from heuristic_vs_model import HeuristicPlayer
 from mcts_pure import MCTSPlayer as MCTS_Pure
 
-FPA_SIMULATIONS = 50
-FPA_DEPTHS = 3
+FPA_SIMULATIONS = 20
 
 class BenchmarkModel(Enum):
     Random = 1
@@ -51,7 +50,7 @@ def main(model_name, mode, benchmark):
     fpa_player = Fictitious_Agent(policy_value_function=best_policy.policy_value_fn,
                                   self_play=False,
                                   simulations=FPA_SIMULATIONS,
-                                  depth=FPA_DEPTHS,
+                                  depth=TRAINING_PARAMETERS[get_fpa_param_key(width, height, n_in_row)]['depth'],
                                   action_sample_count=TRAINING_PARAMETERS[get_fpa_param_key(width, height, n_in_row)]['action_sample_count'])
     benchmark_player = get_benchmark_player(benchmark)
 
@@ -76,12 +75,14 @@ def main(model_name, mode, benchmark):
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_file", type=str, default = r"FPA_Outputs/best_policy_FPA450_6_6_4")
+    parser.add_argument("--model_file", type=str, default = r"FPA_Outputs/best_policy_FPA60_6sample4depth_8_8_5")
     parser.add_argument("--benchmark_model", type=str, default=BenchmarkModel.PureMcts.name, help='Needs to be part of setup in BenchmarkModel')
     parser.add_argument('--mode', type=str, default = 'rate', help = 'rate or dem')
     return parser
 
 if __name__ == "__main__":
+    # 6 x 6: "FPA_Outputs/best_policy_FPA450_6_6_4"
+    # 8 x 8: "FPA_Outputs/best_policy_FPA60_6sample4depth_8_8_5"
     parser = get_args()
     args = parser.parse_args()
     main(args.model_file, args.mode, BenchmarkModel[args.benchmark_model])
