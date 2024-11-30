@@ -217,5 +217,5 @@ class TrainPipeline():
             print('\n\rquit')
 
 if __name__ == '__main__':
-    training_pipeline = TrainPipeline(init_model=r"./FPA_Outputs/best_policy_FPA240_8_8_5.model")
+    training_pipeline = TrainPipeline()
     training_pipeline.run()
