@@ -5,8 +5,9 @@ import numpy as np
 from game import Board, Game
 from mcts_alphaZero import MCTSPlayer
 from policy_value_net_numpy import PolicyValueNetNumpy as TheanoPolicyValueNet
+from policy_value_net_pytorch import PolicyValueNet as PytorchPolicyValueNet
 # from policy_value_net_pytorch_ResNet import PolicyValueNet as PytorchPolicyValueNet
-from policy_value_net_pytorch_ResNet_bottleneck import PolicyValueNet as PytorchPolicyValueNet
+# from policy_value_net_pytorch_ResNet_bottleneck import PolicyValueNet as PytorchPolicyValueNet
 import pickle
 import torch
 import os

@@ -4,9 +4,10 @@ import random
 import numpy as np
 from game import Board, Game
 from mcts_alphaZero import MCTSPlayer
+from policy_value_net_pytorch import PolicyValueNet as PytorchPolicyValueNet
 from policy_value_net_numpy import PolicyValueNetNumpy as TheanoPolicyValueNet
 # from policy_value_net_pytorch_ResNet import PolicyValueNet as PytorchPolicyValueNet
-from policy_value_net_pytorch_ResNet_bottleneck import PolicyValueNet as PytorchPolicyValueNet
+# from policy_value_net_pytorch_ResNet_bottleneck import PolicyValueNet as PytorchPolicyValueNet
 import pickle
 import torch
 import os
@@ -30,21 +31,31 @@ def load_model(model_name, width, height):
     try:
         with open(model_file, 'rb') as f:
             try:
-                # Attempt to load as a pickle file
+                # Attempt to load as a Theano pickle model
                 os.environ['THEANO_FLAGS'] = 'device=cuda,floatX=float32'
                 policy_param = pickle.load(f, encoding='latin1')
-                print(f"Loaded model file '{model_name}' as a pickle.")
+                print(f"Loaded model file '{model_name}' as a Theano pickle.")
                 return TheanoPolicyValueNet(width, height, policy_param)
             except pickle.UnpicklingError:
-                # If pickle fails, try loading as a PyTorch model
-                f.seek(0)  # Reset file pointer to the beginning
-                policy_param = torch.load(f, map_location=torch.device('cuda'), weights_only=True)  # Load PyTorch model
+                # Reset file pointer to try loading as a PyTorch model
+                f.seek(0)
+                policy_param = torch.load(f, map_location=torch.device('cuda'), weights_only=True)
                 print(f"Loaded model file '{model_name}' as a PyTorch model.")
                 best_policy = PytorchPolicyValueNet(width, height)
-                best_policy.policy_value_net.load_state_dict(policy_param)
+                try:
+                    best_policy.policy_value_net.load_state_dict(policy_param, strict=False)
+                    print("Model loaded with potential mismatched keys. Proceeding with training/evaluation.")
+                except RuntimeError as e:
+                    print(f"Error loading model '{model_name}': {e}")
+                    print("Debugging mismatched keys...")
+                    for key in policy_param.keys():
+                        print(f"  {key}: {policy_param[key].shape}")
+                    raise e
                 return best_policy
     except FileNotFoundError:
         raise ValueError(f"Model file '{model_file}' not found.")
+    except Exception as e:
+        raise ValueError(f"Failed to load model '{model_name}': {str(e)}")
 
 
 def main(model_name1, model_name2, mode):
