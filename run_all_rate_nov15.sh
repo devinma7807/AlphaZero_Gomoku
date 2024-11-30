@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the model names
-models=("best_policy_8_8_5" "best_policy_8_8_5_ResNet" "best_policy_6_6_4" "best_policy_6_6_4_ResNet")
+models=("best_policy_8_8_5" "best_policy_bottleneck_8_8_5" "best_policy_6_6_4" "best_policy_bottleneck_6_6_4")
 mode="rate"
 
 # Program 1: heuristic_vs_model.py

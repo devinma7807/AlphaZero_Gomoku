@@ -1,4 +1,4 @@
 Loaded model file as a pickle.
-Rating best_policy_6_6_4 against HeuristicPlayer over 10 games.
+Rating best_policy_6_6_4 against HeuristicPlayer over 20 games.
 Win rate of best_policy_6_6_4 against HeuristicPlayer: 100.0%
-Total running time: 424.41 seconds
+Total running time: 94.02 seconds

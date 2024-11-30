@@ -3,6 +3,9 @@ Loading model: best_policy_8_8_5_ResNet
 Loaded model file 'best_policy_8_8_5' as a pickle.
 Loaded model file 'best_policy_8_8_5_ResNet' as a PyTorch model.
 Rating best_policy_8_8_5 against best_policy_8_8_5_ResNet over 3 games.
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
 Win rate of best_policy_8_8_5: 100.0%
 Win rate of best_policy_8_8_5_ResNet: 0.0%
-Total running time: 298.37 seconds
+Total running time: 28.58 seconds
