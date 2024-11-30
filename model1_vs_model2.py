@@ -77,7 +77,7 @@ def main(model_name1, model_name2, mode):
         print("The model name for Winner is:", model_name1 if winner == mcts_player1.player else model_name2 if winner == mcts_player2.player else "Tie")
 
     elif mode == "rate":
-        num_games = 10
+        num_games = 20
         print(f"Rating {model_name1} against {model_name2} over {num_games} games.")
         win_count1 = 0
         win_count2 = 0
