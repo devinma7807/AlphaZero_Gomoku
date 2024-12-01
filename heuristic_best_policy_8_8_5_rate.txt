@@ -1,0 +1,4 @@
+Loaded model file as a pickle.
+Rating best_policy_8_8_5 against HeuristicPlayer over 10 games.
+Win rate of best_policy_8_8_5 against HeuristicPlayer: 100.0%
+Total running time: 1608.46 seconds

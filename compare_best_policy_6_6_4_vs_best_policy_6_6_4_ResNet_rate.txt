@@ -1,0 +1,8 @@
+Loading model: best_policy_6_6_4
+Loading model: best_policy_6_6_4_ResNet
+Loaded model file 'best_policy_6_6_4' as a pickle.
+Loaded model file 'best_policy_6_6_4_ResNet' as a PyTorch model.
+Rating best_policy_6_6_4 against best_policy_6_6_4_ResNet over 3 games.
+Win rate of best_policy_6_6_4: 100.0%
+Win rate of best_policy_6_6_4_ResNet: 0.0%
+Total running time: 137.19 seconds
