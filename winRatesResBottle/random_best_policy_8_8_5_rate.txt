@@ -1,0 +1,4 @@
+Loaded model file as a pickle.
+Rating best_policy_8_8_5 against RandomPlayer over 20 games.
+Win rate of best_policy_8_8_5 against RandomPlayer: 100.0%
+Total running time: 112.24 seconds

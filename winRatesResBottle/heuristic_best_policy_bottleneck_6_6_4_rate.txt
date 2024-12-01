@@ -1,0 +1,6 @@
+Loaded model file as a PyTorch model.
+<class 'collections.OrderedDict'>
+Keys in policy_param (state_dict): odict_keys(['conv1.weight', 'conv1.bias', 'bn1.weight', 'bn1.bias', 'bn1.running_mean', 'bn1.running_var', 'bn1.num_batches_tracked', 'res_block.conv1.weight', 'res_block.conv1.bias', 'res_block.bn1.weight', 'res_block.bn1.bias', 'res_block.bn1.running_mean', 'res_block.bn1.running_var', 'res_block.bn1.num_batches_tracked', 'res_block.conv2.weight', 'res_block.conv2.bias', 'res_block.bn2.weight', 'res_block.bn2.bias', 'res_block.bn2.running_mean', 'res_block.bn2.running_var', 'res_block.bn2.num_batches_tracked', 'res_block.conv3.weight', 'res_block.conv3.bias', 'res_block.bn3.weight', 'res_block.bn3.bias', 'res_block.bn3.running_mean', 'res_block.bn3.running_var', 'res_block.bn3.num_batches_tracked', 'conv2.weight', 'conv2.bias', 'bn2.weight', 'bn2.bias', 'bn2.running_mean', 'bn2.running_var', 'bn2.num_batches_tracked', 'act_conv1.weight', 'act_conv1.bias', 'act_fc1.weight', 'act_fc1.bias', 'val_conv1.weight', 'val_conv1.bias', 'val_fc1.weight', 'val_fc1.bias', 'val_fc2.weight', 'val_fc2.bias'])
+Rating best_policy_bottleneck_6_6_4 against HeuristicPlayer over 20 games.
+Win rate of best_policy_bottleneck_6_6_4 against HeuristicPlayer: 100.0%
+Total running time: 85.01 seconds

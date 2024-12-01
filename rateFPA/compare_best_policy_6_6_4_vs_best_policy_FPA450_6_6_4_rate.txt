@@ -1,0 +1,9 @@
+Loading model: best_policy_6_6_4
+Loading model: best_policy_FPA450_6_6_4
+Loaded model file 'best_policy_6_6_4' as a Theano pickle.
+Loaded model file 'best_policy_FPA450_6_6_4' as a PyTorch model.
+Model loaded with potential mismatched keys. Proceeding with training/evaluation.
+Rating best_policy_6_6_4 against best_policy_FPA450_6_6_4 over 20 games.
+Win rate of best_policy_6_6_4: 100.0%
+Win rate of best_policy_FPA450_6_6_4: 0.0%
+Total running time: 90.19 seconds
