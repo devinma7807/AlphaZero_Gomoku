@@ -1,0 +1,211 @@
+Demonstrating a game between best_policy_bottleneck_6_6_4 and Random.
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       _       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       _       _       _    
+
+
+   2   _       _       _       _       _       _    
+
+
+   1   _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       _       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       _       _       _    
+
+
+   2   _       _       _       _       _       _    
+
+
+   1   _       X       _       _       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       _       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   _       _       _       _       _       _    
+
+
+   1   _       X       _       _       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       _       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   _       _       _       _       _       _    
+
+
+   1   _       X       X       _       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       _       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   _       _       _       O       _       _    
+
+
+   1   _       X       X       _       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       _       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   _       _       _       O       _       _    
+
+
+   1   _       X       X       X       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       O       _       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   _       _       _       O       _       _    
+
+
+   1   _       X       X       X       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       O       _       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   X       _       _       O       _       _    
+
+
+   1   _       X       X       X       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       O       _       _    
+
+
+   4   _       _       _       O       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   X       _       _       O       _       _    
+
+
+   1   _       X       X       X       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Game end. Winner is FictitiousAgent
+Game over. Winner: Model
+Total execution time: 29.48 seconds

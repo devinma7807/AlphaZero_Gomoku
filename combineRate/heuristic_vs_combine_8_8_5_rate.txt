@@ -1,0 +1,23 @@
+Rating best_policy_bottleneck_8_8_5 against Heuristic over 20 games.
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is HeuristicPlayer 1
+Game end. Winner is FictitiousAgent
+Win rate of best_policy_bottleneck_8_8_5 against Heuristic: 95.0%
+Total execution time: 36153.43 seconds

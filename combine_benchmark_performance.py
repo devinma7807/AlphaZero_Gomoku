@@ -1,10 +1,11 @@
 import argparse
 import re
 import random
+import time  # Import the time module
 
 from Fictitious_Agent import Fictitious_Agent, TRAINING_PARAMETERS, get_fpa_param_key
 from game import Board, Game
-from policy_value_net_pytorch import PolicyValueNet
+from policy_value_net_pytorch_ResNet_bottleneck import PolicyValueNet  # Updated to bottleneck model
 from enum import Enum
 
 from random_vs_model import RandomPlayer
@@ -22,6 +23,7 @@ class BenchmarkModel(Enum):
         return self.name
 
 def get_benchmark_player(benchmark):
+    """Return the appropriate benchmark player."""
     if benchmark == BenchmarkModel.Random:
         benchmark_player = RandomPlayer()
     elif benchmark == BenchmarkModel.Heuristic:
@@ -33,6 +35,9 @@ def get_benchmark_player(benchmark):
     return benchmark_player
 
 def main(model_name, mode, benchmark):
+    # Start timer
+    start_time = time.time()
+    
     # Extract board size and win condition from the model name (e.g., "best_policy_8_8_5")
     match = re.search(r"_(\d+)_(\d+)_(\d+)", model_name)
     if match:
@@ -46,12 +51,14 @@ def main(model_name, mode, benchmark):
 
     # Load the model
     model_file = f"{model_name}.model"
-    best_policy = PolicyValueNet(width, height, model_file)
-    fpa_player = Fictitious_Agent(policy_value_function=best_policy.policy_value_fn,
-                                  self_play=False,
-                                  simulations=FPA_SIMULATIONS,
-                                  depth=TRAINING_PARAMETERS[get_fpa_param_key(width, height, n_in_row)]['depth'],
-                                  action_sample_count=TRAINING_PARAMETERS[get_fpa_param_key(width, height, n_in_row)]['action_sample_count'])
+    best_policy = PolicyValueNet(width, height, model_file)  # Bottleneck model
+    fpa_player = Fictitious_Agent(
+        policy_value_function=best_policy.policy_value_fn,
+        self_play=False,
+        simulations=FPA_SIMULATIONS,
+        depth=TRAINING_PARAMETERS[get_fpa_param_key(width, height, n_in_row)]['depth'],
+        action_sample_count=TRAINING_PARAMETERS[get_fpa_param_key(width, height, n_in_row)]['action_sample_count']
+    )
     benchmark_player = get_benchmark_player(benchmark)
 
     # Determine mode of operation: demonstration or rating
@@ -61,28 +68,32 @@ def main(model_name, mode, benchmark):
         print("Game over. Winner:", benchmark if winner == benchmark_player.player else "Model" if winner == fpa_player.player else "Tie")
 
     elif mode == "rate":
-        print(f"Rating {model_name} against {benchmark} over 100 games.")
+        print(f"Rating {model_name} against {benchmark} over 20 games.")
         win_count = 0
-        for _ in range(100):
+        for _ in range(20):
             winner = game.start_play(benchmark_player, fpa_player, start_player=random.randint(0, 1), is_shown=0)
             if winner == fpa_player.player:
                 win_count += 1
-        win_rate = win_count / 100 * 100
+        win_rate = win_count / 20 * 100
         print(f"Win rate of {model_name} against {benchmark}: {win_rate}%")
 
     else:
         raise ValueError("Invalid mode. Use 'dem' for demonstration or 'rate' for rating.")
+    
+    # End timer and print elapsed time
+    end_time = time.time()
+    print(f"Total execution time: {end_time - start_time:.2f} seconds")
 
 def get_args():
+    """Parse command-line arguments."""
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_file", type=str, default = r"FPA_Outputs/best_policy_FPA60_6sample4depth_8_8_5")
-    parser.add_argument("--benchmark_model", type=str, default=BenchmarkModel.PureMcts.name, help='Needs to be part of setup in BenchmarkModel')
-    parser.add_argument('--mode', type=str, default = 'rate', help = 'rate or dem')
+    parser.add_argument("--model_file", type=str, default="best_policy_bottleneck_8_8_5", help="Path to the model file")
+    parser.add_argument("--benchmark_model", type=str, default=BenchmarkModel.PureMcts.name, help="Needs to be part of setup in BenchmarkModel")
+    parser.add_argument("--mode", type=str, default="rate", help="Mode of operation: 'rate' or 'dem'")
     return parser
 
 if __name__ == "__main__":
-    # 6 x 6: "FPA_Outputs/best_policy_FPA450_6_6_4"
-    # 8 x 8: "FPA_Outputs/best_policy_FPA60_6sample4depth_8_8_5"
+    # Parse arguments and execute the main function
     parser = get_args()
     args = parser.parse_args()
     main(args.model_file, args.mode, BenchmarkModel[args.benchmark_model])

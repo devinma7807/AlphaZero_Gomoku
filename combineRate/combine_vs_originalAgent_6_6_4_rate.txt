@@ -1,0 +1,24 @@
+Rating originalAgent on board size 6_6_4 against combined over 20 games.
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is FictitiousAgent
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Win rate of originalAgent on board size 6_6_4: 75.0%
+Win rate of combined on board size 6_6_4: 25.0%
+Total execution time: 2251.48 seconds

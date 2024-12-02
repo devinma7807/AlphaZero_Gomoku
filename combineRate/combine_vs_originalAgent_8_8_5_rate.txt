@@ -1,0 +1,24 @@
+Rating originalAgent on board size 8_8_5 against combined over 20 games.
+Game end. Winner is FictitiousAgent
+Game end. Winner is MCTS 1
+Game end. Winner is FictitiousAgent
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is FictitiousAgent
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is FictitiousAgent
+Game end. Winner is MCTS 1
+Game end. Winner is FictitiousAgent
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is MCTS 1
+Game end. Winner is FictitiousAgent
+Game end. Winner is MCTS 1
+Win rate of originalAgent on board size 8_8_5: 70.0%
+Win rate of combined on board size 8_8_5: 30.0%
+Total execution time: 26527.39 seconds

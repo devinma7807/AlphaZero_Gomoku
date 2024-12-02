@@ -1,0 +1,25 @@
+Loaded model file 'best_policy_6_6_4.model' as a pickle.
+Rating originalNN on board size 6_6_4 against combined over 20 games.
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Win rate of originalNN on board size 6_6_4: 75.0%
+Win rate of combined on board size 6_6_4: 25.0%
+Total execution time: 21023.60 seconds

@@ -1,0 +1,23 @@
+Rating best_policy_bottleneck_6_6_4 against Random over 20 games.
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Game end. Winner is FictitiousAgent
+Win rate of best_policy_bottleneck_6_6_4 against Random: 100.0%
+Total execution time: 831.83 seconds
