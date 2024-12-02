@@ -1,0 +1,23 @@
+Rating heuristic model against random model over 20 games.
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is Random 1
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Game end. Winner is HeuristicPlayer 2
+Win rate of heuristic model against random model: 95.0%
+Total execution time: 0.04 seconds

@@ -1,0 +1,349 @@
+Demonstrating a game between heuristic model and random model.
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       _       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       _       _       _    
+
+
+   2   _       _       _       _       _       _    
+
+
+   1   _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       _       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       _       _       _    
+
+
+   2   _       _       _       _       _       X    
+
+
+   1   _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       _       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   _       _       _       _       _       X    
+
+
+   1   _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   _       _       _       _       _       X    
+
+
+   1   _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   _       _       O       _       _       X    
+
+
+   1   _       _       _       _       _       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   _       _       O       _       _       X    
+
+
+   1   _       _       _       _       X       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   _       _       O       O       _       X    
+
+
+   1   _       _       _       _       X       _    
+
+
+   0   _       _       _       _       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       _       O       _       _    
+
+
+   2   _       _       O       O       _       X    
+
+
+   1   _       _       _       _       X       _    
+
+
+   0   _       _       _       X       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       O       O       _       _    
+
+
+   2   _       _       O       O       _       X    
+
+
+   1   _       _       _       _       X       _    
+
+
+   0   _       _       _       X       _       _    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       O       O       _       _    
+
+
+   2   _       _       O       O       _       X    
+
+
+   1   _       _       _       _       X       _    
+
+
+   0   _       _       _       X       _       X    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       O       O       _       _    
+
+
+   2   _       _       O       O       _       X    
+
+
+   1   _       _       _       _       X       _    
+
+
+   0   _       _       _       X       O       X    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       O       O       _       _    
+
+
+   2   _       _       O       O       _       X    
+
+
+   1   _       _       _       _       X       X    
+
+
+   0   _       _       _       X       O       X    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   _       _       O       O       _       O    
+
+
+   2   _       _       O       O       _       X    
+
+
+   1   _       _       _       _       X       X    
+
+
+   0   _       _       _       X       O       X    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   X       _       O       O       _       O    
+
+
+   2   _       _       O       O       _       X    
+
+
+   1   _       _       _       _       X       X    
+
+
+   0   _       _       _       X       O       X    
+
+
+Player 1 with X
+Player 2 with O
+
+       0       1       2       3       4       5
+
+   5   _       _       _       _       X       _    
+
+
+   4   _       _       _       _       _       _    
+
+
+   3   X       _       O       O       O       O    
+
+
+   2   _       _       O       O       _       X    
+
+
+   1   _       _       _       _       X       X    
+
+
+   0   _       _       _       X       O       X    
+
+
+Game end. Winner is HeuristicPlayer 2
+Game over. Winner: heuristic model
+Total execution time: 0.00 seconds
